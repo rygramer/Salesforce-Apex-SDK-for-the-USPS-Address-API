@@ -1,6 +1,6 @@
 public with sharing class USPSShippingAPIService {
-    private List<USPSAddressRequest> uspsAddressRequests;
-    public List<USPSAddressResponse> uspsAddressResponses = new List<USPSAddressResponse>();
+    private List<USPSRequest> requests;
+    public List<USPSResponse> responses = new List<USPSResponse>();
 
     private final Map<String,String> CLASS_MAPPING = new Map<String,String>{
         'USPSVerifyAddressRequest' => 'USPSShippingAPIService.Verify',
@@ -11,13 +11,13 @@ public with sharing class USPSShippingAPIService {
 
     private String revision = '0';
 
-    public USPSShippingAPIService(List<USPSAddressRequest> uspsAddressRequests){
-        this.uspsAddressRequests = uspsAddressRequests;
-        this.apiClass = Type.forName(CLASS_MAPPING.get(uspsAddressRequests[0].getName()));
+    public USPSShippingAPIService(List<USPSRequest> requests){
+        this.requests = requests;
+        this.apiClass = Type.forName(CLASS_MAPPING.get(requests.get(0).getName()));
     }
 
-    public USPSShippingAPIService(USPSAddressRequest uspsAddress){
-        this(new List<USPSAddressRequest>{uspsAddress});
+    public USPSShippingAPIService(USPSRequest request){
+        this(new List<USPSRequest>{request});
     }
 
     public USPSShippingAPIService setReturnAllData(){
@@ -25,8 +25,8 @@ public with sharing class USPSShippingAPIService {
         return this;
     }
 
-    public List<USPSAddressResponse> send(){
-        Map<Integer,List<USPSAddressRequest>> batchedRequests = this.batchRequests();
+    public List<USPSResponse> send(){
+        Map<Integer,List<USPSRequest>> batchedRequests = this.batchRequests();
 
         for(Integer batchIteration : batchedRequests.keySet()){
             USPSShippingAPI api = (USPSShippingAPI)apiClass.newInstance();
@@ -35,18 +35,18 @@ public with sharing class USPSShippingAPIService {
             api.send();
         }
         
-        return this.uspsAddressResponses;
+        return this.responses;
     }
 
-    private Map<Integer,List<USPSAddressRequest>> batchRequests(){
-        Map<Integer,List<USPSAddressRequest>> batchedRequests = new Map<Integer,List<USPSAddressRequest>>();
+    private Map<Integer,List<USPSRequest>> batchRequests(){
+        Map<Integer,List<USPSRequest>> batchedRequests = new Map<Integer,List<USPSRequest>>();
 
         Integer batchIteration = 0;
         Integer loopCounter = 1;
-        for(USPSAddressRequest uspsAddressRequest : uspsAddressRequests){
-            if(batchedRequests.get(batchIteration) == null) batchedRequests.put(batchIteration,new List<USPSAddressRequest>());
+        for(USPSRequest USPSRequest : requests){
+            if(batchedRequests.get(batchIteration) == null) batchedRequests.put(batchIteration,new List<USPSRequest>());
 
-            batchedRequests.get(batchIteration).add(uspsAddressRequest);
+            batchedRequests.get(batchIteration).add(USPSRequest);
 
             loopCounter++;
 
@@ -61,7 +61,7 @@ public with sharing class USPSShippingAPIService {
 
     private abstract class USPSShippingAPI{
         private USPSShippingAPIService service;
-        private List<USPSAddressRequest> uspsAddressRequestBatch;
+        private List<USPSRequest> requestBatch;
         private Dom.Document requestXML;
         private Dom.Document responseXML;
         protected final String USERID = USPS_Shipping_API_Settings__c.getInstance().USPS_Username__c;
@@ -75,8 +75,8 @@ public with sharing class USPSShippingAPIService {
             return this;
         }
 
-        public USPSShippingAPI setBatch(List<USPSAddressRequest> uspsAddressRequestBatch){
-            this.uspsAddressRequestBatch = uspsAddressRequestBatch;
+        public USPSShippingAPI setBatch(List<USPSRequest> requestBatch){
+            this.requestBatch = requestBatch;
             return this;
         }
         
@@ -98,11 +98,11 @@ public with sharing class USPSShippingAPIService {
 
         private USPSShippingAPI processChildNodes(Dom.XmlNode parentNode, String tagName){
             Integer counter = 0;
-            for(USPSAddressRequest uspsAddress : this.uspsAddressRequestBatch){
-                Dom.XmlNode xmlAddress = parentNode.addChildElement(tagName, null, null);
-                xmlAddress.setAttribute('ID', String.valueOf(counter));
+            for(USPSRequest uspsAddress : this.requestBatch){
+                Dom.XmlNode xml = parentNode.addChildElement(tagName, null, null);
+                xml.setAttribute('ID', String.valueOf(counter));
 
-                uspsAddress.writeXML(xmlAddress);
+                uspsAddress.writeXML(xml);
 
                 counter++;
             }
@@ -116,8 +116,8 @@ public with sharing class USPSShippingAPIService {
 
             if(responseRoot.getName() == 'Error') throw new USPSShippingAPIException(responseRoot.getChildElement('Description', null).getText());
 
-            for(Dom.XmlNode address : responseRoot.getChildElements()){
-                this.service.uspsAddressResponses.add(new USPSAddressResponse(address.getChildElements()));
+            for(Dom.XmlNode xml : responseRoot.getChildElements()){
+                this.service.responses.add(new USPSResponse(xml.getChildElements()));
             }
 
             return this;
@@ -134,11 +134,11 @@ public with sharing class USPSShippingAPIService {
         private override USPSShippingAPI writeXML(){
             this.requestXML = new Dom.Document();
         
-            Dom.XmlNode addressValidateRequest = this.requestXML.createRootElement(this.rootTag, null, null);
-            addressValidateRequest.setAttribute('USERID', this.USERID);
-            addressValidateRequest.addChildElement('Revision', null, null).addTextNode(this.service.revision);
+            Dom.XmlNode root = this.requestXML.createRootElement(this.rootTag, null, null);
+            root.setAttribute('USERID', this.USERID);
+            root.addChildElement('Revision', null, null).addTextNode(this.service.revision);
 
-            this.processChildNodes(addressValidateRequest, this.parentTag);
+            this.processChildNodes(root, this.parentTag);
 
             return this;
         }
@@ -154,10 +154,10 @@ public with sharing class USPSShippingAPIService {
         private override USPSShippingAPI writeXML(){
             this.requestXML = new Dom.Document();
         
-            Dom.XmlNode addressValidateRequest = this.requestXML.createRootElement(this.rootTag, null, null);
-            addressValidateRequest.setAttribute('USERID', this.USERID);
+            Dom.XmlNode root = this.requestXML.createRootElement(this.rootTag, null, null);
+            root.setAttribute('USERID', this.USERID);
 
-            this.processChildNodes(addressValidateRequest, this.parentTag);
+            this.processChildNodes(root, this.parentTag);
 
             return this;
         }
@@ -173,10 +173,10 @@ public with sharing class USPSShippingAPIService {
         private override USPSShippingAPI writeXML(){
             this.requestXML = new Dom.Document();
         
-            Dom.XmlNode addressValidateRequest = this.requestXML.createRootElement(this.rootTag, null, null);
-            addressValidateRequest.setAttribute('USERID', this.USERID);
+            Dom.XmlNode root = this.requestXML.createRootElement(this.rootTag, null, null);
+            root.setAttribute('USERID', this.USERID);
 
-            this.processChildNodes(addressValidateRequest, this.parentTag);
+            this.processChildNodes(root, this.parentTag);
 
             return this;
         }

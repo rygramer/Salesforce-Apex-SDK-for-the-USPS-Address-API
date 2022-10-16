@@ -1,11 +1,11 @@
-USPSAddressRequest address1 = new USPSCityStateLookupRequest()
+USPSRequest address1 = new USPSCityStateLookupRequest()
 .setZip5('20818');
 
-USPSAddressRequest address2 = new USPSCityStateLookupRequest().setZip5('20002');
+USPSRequest address2 = new USPSCityStateLookupRequest().setZip5('20002');
 
-USPSAddressRequest address3 = new USPSCityStateLookupRequest().setZip5('90210');
+USPSRequest address3 = new USPSCityStateLookupRequest().setZip5('90210');
 
-List<USPSAddressRequest> addresses = new List<USPSAddressRequest>{address1,address2,address3};
+List<USPSRequest> addresses = new List<USPSRequest>{address1,address2,address3};
 
-List<USPSAddressResponse> responses = new USPSShippingAPIService(addresses).send();
+List<USPSResponse> responses = new USPSShippingAPIService(addresses).send();
 system.debug(responses);

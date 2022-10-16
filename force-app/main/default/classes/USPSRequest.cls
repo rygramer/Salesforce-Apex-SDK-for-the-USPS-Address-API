@@ -1,4 +1,4 @@
-public with sharing abstract class USPSAddressRequest {
+public with sharing abstract class USPSRequest {
     protected String firmName = '';
     protected String address1 = '';
     protected String address2 = '';

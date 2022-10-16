@@ -1,4 +1,4 @@
-public with sharing class USPSAddressResponse {
+public with sharing class USPSResponse {
     public String firmName{get;private set;}
     public String address1{get;private set;}
     public String address2{get;private set;}
@@ -40,14 +40,14 @@ public with sharing class USPSAddressResponse {
     public String centralDeliveryPoint{get;private set;}
     public String vacant{get;private set;}
 
-    public USPSAddressResponse(List<Dom.XmlNode> responseFields) {
+    public USPSResponse(List<Dom.XmlNode> responseFields) {
         for(Dom.XmlNode responseField : responseFields){
             String field = responseField.getName();
             String value = responseField.getText();
             system.debug(field);
             system.debug(value);
             switch on field{
-                when 'Error'{throw new USPSAddressResponseException(responseField.getChildElement('Description', null).getText());}
+                when 'Error'{throw new USPSResponseException(responseField.getChildElement('Description', null).getText());}
                 when 'FirmName'{this.firmName = value;}
                 when 'Address1'{this.address1 = value;}
                 when 'Address2'{this.address2 = value;}
@@ -73,5 +73,5 @@ public with sharing class USPSAddressResponse {
         system.debug('###############');
     }
 
-    public class USPSAddressResponseException extends Exception{}
+    public class USPSResponseException extends Exception{}
 }

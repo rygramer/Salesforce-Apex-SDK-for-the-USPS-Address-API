@@ -1,4 +1,4 @@
-public with sharing class USPSZipCodeLookupRequest extends USPSAddressRequest{
+public with sharing class USPSZipCodeLookupRequest extends USPSRequest{
     public USPSZipCodeLookupRequest setFirmName(String firmName){
         if(firmName != null) this.firmName = firmName;
         return this;
