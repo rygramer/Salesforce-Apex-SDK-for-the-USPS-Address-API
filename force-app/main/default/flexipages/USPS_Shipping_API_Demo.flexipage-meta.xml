@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <flexiPageRegions>
+        <name>region1</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
         <itemInstances>
             <componentInstance>
                 <componentName>uspsShippingAPIDemo</componentName>
                 <identifier>c_uspsShippingAPIDemo</identifier>
             </componentInstance>
         </itemInstances>
-        <name>main</name>
+        <name>region2</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <name>region3</name>
         <type>Region</type>
     </flexiPageRegions>
     <masterLabel>USPS Shipping API Demo</masterLabel>
     <template>
-        <name>flexipage:defaultAppHomeTemplate</name>
+        <name>flexipage:appHomeTemplateHeaderTwoColumnsEqualWidth</name>
     </template>
     <type>AppPage</type>
 </FlexiPage>

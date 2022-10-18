@@ -22,9 +22,7 @@ export default class UspsShippingAPIDemo extends LightningElement {
     }
 
     handleChange(event){
-        this.verifiedAddress = null;
-        this.error = null;
-
+        this.nullifyReturns();
         this.street = event.target.street;
         this.city = event.target.city;
         this.state = event.target.province;
@@ -33,6 +31,7 @@ export default class UspsShippingAPIDemo extends LightningElement {
 
     handleClick(){
         this.isLoading = true;
+        this.nullifyReturns();
         verifyAddress({street: this.street, city: this.city, state: this.state, zip: this.zip})
             .then(verifiedAddress => {
                 this.verifiedAddress = verifiedAddress;
@@ -43,5 +42,10 @@ export default class UspsShippingAPIDemo extends LightningElement {
             .finally(() =>{
                 this.isLoading = false;
             })
+    }
+
+    nullifyReturns(){
+        this.verifiedAddress = null;
+        this.error = null;
     }
 }

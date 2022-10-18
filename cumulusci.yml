@@ -25,3 +25,15 @@ tasks:
     run_tests:
         options:
             required_org_code_coverage_percent: 90
+
+flows:
+    dev_org:
+        steps:
+            5:
+                task: assign_permission_sets
+                options:
+                    api_names: USPS_Shipping_API_User
+            6:
+                task: dx
+                options:
+                    command: force:org:open -p /lightning/n/USPS_Shipping_API_Demo

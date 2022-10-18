@@ -8,9 +8,9 @@ public with sharing class USPSShippingAPIDemoController {
         .setState(state)
         .setZip5(zip);
 
-        List<USPSResponse> responses = new USPSShippingAPIService(address).send();
+        USPSResponse response = new USPSShippingAPIService().send(address);
 
-        return new VerifiedAddress(responses.get(0));
+        return new VerifiedAddress(response);
     }
 
     public class VerifiedAddress{
