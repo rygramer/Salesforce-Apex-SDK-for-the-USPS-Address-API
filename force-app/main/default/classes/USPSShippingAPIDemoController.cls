@@ -1,7 +1,7 @@
 public with sharing class USPSShippingAPIDemoController {
     
     @AuraEnabled
-    public static VerifiedAddress verifyAddress(String street, String city, String state, string zip){
+    public static Address verifyAddress(String street, String city, String state, String zip){
         USPSRequest address = new USPSVerifyAddressRequest()
         .setAddress2(street)
         .setCity(city)
@@ -10,10 +10,10 @@ public with sharing class USPSShippingAPIDemoController {
 
         USPSResponse response = new USPSShippingAPIService().send(address);
 
-        return new VerifiedAddress(response);
+        return new Address(response);
     }
 
-    public class VerifiedAddress{
+    public class Address{
         @AuraEnabled
         public String street;
 
@@ -26,7 +26,7 @@ public with sharing class USPSShippingAPIDemoController {
         @AuraEnabled
         public String zip;
 
-        public VerifiedAddress(USPSResponse response){
+        public Address(USPSResponse response){
             this.street = response.street;
             this.city = response.city;
             this.state = response.state;

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
-    <customSettingsType>Hierarchy</customSettingsType>
-    <enableFeeds>false</enableFeeds>
-    <label>USPS Shipping API Settings</label>
+    <label>USPS Shipping API Setting</label>
+    <pluralLabel>USPS Shipping API Settings</pluralLabel>
     <visibility>Public</visibility>
 </CustomObject>

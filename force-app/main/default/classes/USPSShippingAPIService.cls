@@ -26,8 +26,8 @@ public with sharing class USPSShippingAPIService {
     private abstract class USPSShippingAPI{
         protected final String USERID{
             get{
-                USERID = USPS_Shipping_API_Settings__c.getInstance().USPS_Username__c;
-                if(USERID == null) throw new USPSShippingAPIException('Add your USPS Username to the USPS Shipping API Custom Settings.');
+                USERID = USPS_Shipping_API_Setting__mdt.getInstance('USPS_Username')?.Value__c;
+                if(USERID == null) throw new USPSShippingAPIException('Your USPS Username must be configured. Navigate to the USPS Shipping API Setting Custom Metadata object. Open the USPS_Username record (if this record doesn\'t exist, create it). Complete the Value field with your USPS Username.');
                 return USERID;
             }
             private set;
@@ -69,8 +69,8 @@ public with sharing class USPSShippingAPIService {
                 req.setEndpoint('callout:USPS_Shipping_API/'+ this.endPoint + xml);
                 req.setMethod('GET');
 
-                HttpResponse res = new HTTP().send(req);
-                this.responseXML = res.getBodyDocument();
+                HttpResponse response = new HTTP().send(req);
+                this.responseXML = response.getBodyDocument();
 
                 this.readXML();
             }
