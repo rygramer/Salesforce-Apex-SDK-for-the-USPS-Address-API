@@ -26,11 +26,15 @@ public with sharing class USPSShippingAPIDemoController {
         @AuraEnabled
         public String zip;
 
+        @AuraEnabled
+        public String error;
+
         public Address(USPSResponse response){
             this.street = response.street;
             this.city = response.city;
             this.state = response.state;
             this.zip = response.zip;
+            this.error = response.error;
         }
     }
 }

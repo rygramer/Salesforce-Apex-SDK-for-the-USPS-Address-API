@@ -21,7 +21,7 @@
       "enableTranslationWorkbench": true
     },
     "mobileSettings": {
-      "enableS1EncryptedStoragePref2": true
+      "enableS1EncryptedStoragePref2": false
     }
   }
 }

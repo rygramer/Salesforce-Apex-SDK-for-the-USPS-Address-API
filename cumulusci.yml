@@ -26,7 +26,42 @@ tasks:
         options:
             required_org_code_coverage_percent: 90
 
+    deploy_demo_app:
+        description: Deploys the USPS Shipping Demo App
+        class_path: cumulusci.tasks.salesforce.Deploy
+        options:
+            path: unpackaged/config/demo-app
+    
+
+    assign_demo_app_perm_set:
+        description: Assigns the USPS Shipping Demo App permission set
+        class_path: cumulusci.tasks.salesforce.users.permsets.AssignPermissionSets
+        options:
+            api_names: USPS_Shipping_API_Demo_Viewer
+    
+    open_demo_app:
+        description: Opens the USPS Shipping Demo App
+        class_path: cumulusci.tasks.sfdx.SFDXOrgTask
+        options:
+            command: force:org:open -p /lightning/n/USPS_Shipping_API_Demo
+    
+    retrieve_changes_from_demo_app:
+        description: Retrieves changes specifically related to the USPS Shipping API Demo App
+        class_path: cumulusci.tasks.salesforce.sourcetracking.RetrieveChanges
+        options:
+            path: unpackaged/config/demo-app
+            exclude: profiles
+
 flows:
+    deploy_demo_app:
+        steps:
+            1:
+                task: deploy_demo_app
+            2:
+                task: assign_demo_app_perm_set
+            3:
+                task: open_demo_app
+
     dev_org:
         steps:
             5:
@@ -34,6 +69,4 @@ flows:
                 options:
                     api_names: USPS_Shipping_API_User
             6:
-                task: dx
-                options:
-                    command: force:org:open -p /lightning/n/USPS_Shipping_API_Demo
+                flow: deploy_demo_app

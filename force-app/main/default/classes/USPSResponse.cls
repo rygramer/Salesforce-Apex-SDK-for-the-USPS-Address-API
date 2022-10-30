@@ -1,4 +1,5 @@
 public with sharing class USPSResponse {
+    public string error{get; private set;}
     public String firmName{get;private set;}
     public String address1{get;private set;}
     public String address2{get;private set;}
@@ -44,10 +45,8 @@ public with sharing class USPSResponse {
         for(Dom.XmlNode responseField : responseFields){
             String field = responseField.getName();
             String value = responseField.getText();
-            system.debug(field);
-            system.debug(value);
             switch on field{
-                when 'Error'{throw new USPSResponseException(responseField.getChildElement('Description', null).getText());}
+                when 'Error'{this.error = responseField.getChildElement('Description', null).getText();}
                 when 'FirmName'{this.firmName = value;}
                 when 'Address1'{this.address1 = value;}
                 when 'Address2'{this.address2 = value;}
@@ -70,7 +69,6 @@ public with sharing class USPSResponse {
                 when 'Vacant'{this.vacant = value;}
             }
         }
-        system.debug('###############');
     }
 
     public class USPSResponseException extends Exception{}

@@ -1,4 +1,4 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement } from 'lwc';
 import verifyAddress from '@salesforce/apex/USPSShippingAPIDemoController.verifyAddress';
 
 export default class UspsShippingAPIDemo extends LightningElement {
@@ -34,7 +34,11 @@ export default class UspsShippingAPIDemo extends LightningElement {
         this.nullifyReturns();
         verifyAddress({street: this.street, city: this.city, state: this.state, zip: this.zip})
             .then(verifiedAddress => {
-                this.verifiedAddress = verifiedAddress;
+                if(verifiedAddress.error){
+                    this.error = verifiedAddress.error;
+                } else {
+                    this.verifiedAddress = verifiedAddress;
+                }
             })
             .catch(error => {
                 this.error = error.body.message;
