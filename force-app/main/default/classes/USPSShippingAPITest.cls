@@ -14,6 +14,8 @@ public with sharing class USPSShippingAPITest {
         .setZip5('zip5')
         .setZip4('zip4');
 
+        instantiateSettings();
+
         Test.startTest();
         USPSResponse response = new USPSShippingAPIService().setReturnAllData().send(address);
         Test.stopTest();
@@ -36,6 +38,8 @@ public with sharing class USPSShippingAPITest {
         .setZip5('zip5')
         .setZip4('zip4');
 
+        instantiateSettings();
+
         Test.startTest();
         USPSResponse response = new USPSShippingAPIService().send(address);
         Test.stopTest();
@@ -49,6 +53,8 @@ public with sharing class USPSShippingAPITest {
 
         USPSRequest address = new USPSCityStateLookupRequest()
         .setZip5('zip5');
+
+        instantiateSettings();
 
         Test.startTest();
         USPSResponse response = new USPSShippingAPIService().send(address);
@@ -69,10 +75,22 @@ public with sharing class USPSShippingAPITest {
             );
         }
 
+        instantiateSettings();
+
         Test.startTest();
         List<USPSResponse> response = new USPSShippingAPIService().send(addresses);
         Test.stopTest();
 
         System.assert(response[0].address1 == 'address1', 'The response matches what was set in the HttpMock class.');
+    }
+
+    private static void instantiateSettings(){
+        USPS_Shipping_API_Setting__mdt setting = new USPS_Shipping_API_Setting__mdt(
+            DeveloperName = 'USPS_Username',
+            Value__c = 'username'
+        );
+        USPSShippingAPIService.settings = new Map<String,USPS_Shipping_API_Setting__mdt>{
+            setting.DeveloperName => setting
+        };
     }
 }

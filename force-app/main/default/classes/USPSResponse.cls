@@ -70,6 +70,4 @@ public with sharing class USPSResponse {
             }
         }
     }
-
-    public class USPSResponseException extends Exception{}
 }

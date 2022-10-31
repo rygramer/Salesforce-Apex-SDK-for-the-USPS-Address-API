@@ -7,6 +7,9 @@ public with sharing class USPSShippingAPIService {
 
     private String revision = '0';
 
+    @TestVisible
+    private static Map<String,USPS_Shipping_API_Setting__mdt> settings = USPS_Shipping_API_Setting__mdt.getAll();
+
     public USPSShippingAPIService setReturnAllData(){
         this.revision = '1';
         return this;
@@ -26,8 +29,8 @@ public with sharing class USPSShippingAPIService {
     private abstract class USPSShippingAPI{
         protected final String USERID{
             get{
-                USERID = USPS_Shipping_API_Setting__mdt.getInstance('USPS_Username')?.Value__c;
-                if(USERID == null) throw new USPSShippingAPIException('Your USPS Username must be configured. Navigate to the USPS Shipping API Setting Custom Metadata object. Open the USPS_Username record (if this record doesn\'t exist, create it). Complete the Value field with your USPS Username.');
+                USERID = settings.get('USPS_Username')?.Value__c;
+                if(USERID == null) throw new USPSShippingAPIException(System.Label.USPS_Shipping_API_Username_Required_Message);
                 return USERID;
             }
             private set;

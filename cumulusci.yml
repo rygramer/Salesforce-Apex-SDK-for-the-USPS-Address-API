@@ -45,12 +45,10 @@ tasks:
         options:
             command: force:org:open -p /lightning/n/USPS_Shipping_API_Demo
     
-    retrieve_changes_from_demo_app:
-        description: Retrieves changes specifically related to the USPS Shipping API Demo App
-        class_path: cumulusci.tasks.salesforce.sourcetracking.RetrieveChanges
+    retrieve_changes:
         options:
             path: unpackaged/config/demo-app
-            exclude: profiles
+            exclude: profiles, USPS_Shipping_API_Setting.USPS_Username
 
 flows:
     deploy_demo_app:
