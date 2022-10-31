@@ -5,7 +5,7 @@ USPSRequest address = new USPSVerifyAddressRequest()
 
 List<USPSRequest> addresses = new List<USPSRequest>{address};
 
-List<USPSResponse> responses = new USPSShippingAPIService().send(addresses);
+List<USPSResponse> responses = new USPSShippingAPIService().setReturnAllData().send(addresses);
 system.debug('--------------> CALLOUT SIZE:' + limits.getCallouts());
 system.debug('--------------> ADDRESS SIZE:' + addresses.size());
 system.debug('--------------> RESPONSE SIZE:' + responses.size());

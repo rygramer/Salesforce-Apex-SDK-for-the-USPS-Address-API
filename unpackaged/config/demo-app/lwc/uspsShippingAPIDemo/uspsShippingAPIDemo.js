@@ -38,6 +38,14 @@ export default class UspsShippingAPIDemo extends LightningElement {
                     this.error = verifiedAddress.error;
                 } else {
                     this.verifiedAddress = verifiedAddress;
+
+                    let json = this.template.querySelector('jsonVerifiedAddress');
+                    json = JSON.stringify(verifiedAddress,null,'\t');
+
+                    for(var key in verifiedAddress){
+                        console.log(key);
+                        console.log(verifiedAddress[key]);
+                    }
                 }
             })
             .catch(error => {
