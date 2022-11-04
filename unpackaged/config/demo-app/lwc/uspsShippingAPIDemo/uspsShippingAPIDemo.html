@@ -52,7 +52,21 @@
                             disabled
                         >
                         </lightning-input-address>
-                        <pre id="jsonVerifiedAddress"></pre>
+                        <lightning-accordion
+                            class="slds-var-p-top_small"
+                            onsectiontoggle={handleToggleSection}
+                            active-section-name={activeAccordionSectionName}
+                            allow-multiple-sections-open
+                        >
+                            <lightning-accordion-section
+                                name="json"
+                                label="Additional data from the USPS Verification Response"
+                            >
+                                <pre>
+                                    {jsonVerifiedAddress}
+                                </pre>
+                            </lightning-accordion-section>
+                        </lightning-accordion>
                     </template>
                     <template if:true={error}>
                         <p class="slds-text-color_error">{error}</p>

@@ -26,13 +26,12 @@ tasks:
         options:
             required_org_code_coverage_percent: 90
 
-    deploy_demo_app:
+    deploy:
         description: Deploys the USPS Shipping Demo App
         class_path: cumulusci.tasks.salesforce.Deploy
         options:
             path: unpackaged/config/demo-app
     
-
     assign_demo_app_perm_set:
         description: Assigns the USPS Shipping Demo App permission set
         class_path: cumulusci.tasks.salesforce.users.permsets.AssignPermissionSets
@@ -54,7 +53,7 @@ flows:
     deploy_demo_app:
         steps:
             1:
-                task: deploy_demo_app
+                task: deploy
             2:
                 task: assign_demo_app_perm_set
             3:

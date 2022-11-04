@@ -10,6 +10,9 @@ export default class UspsShippingAPIDemo extends LightningElement {
     verifiedAddress;
     error;
 
+    jsonVerifiedAddress;
+    activeAccordionSectionName = '';
+
     isLoading;
 
     get verified(){
@@ -39,8 +42,7 @@ export default class UspsShippingAPIDemo extends LightningElement {
                 } else {
                     this.verifiedAddress = verifiedAddress;
 
-                    let json = this.template.querySelector('jsonVerifiedAddress');
-                    json = JSON.stringify(verifiedAddress,null,'\t');
+                    this.jsonVerifiedAddress = JSON.stringify(verifiedAddress,null,'\t');
 
                     for(var key in verifiedAddress){
                         console.log(key);
@@ -54,6 +56,14 @@ export default class UspsShippingAPIDemo extends LightningElement {
             .finally(() =>{
                 this.isLoading = false;
             })
+    }
+
+    handleToggleSection(){
+        if(this.activeAccordionSectionName.length === 0){
+            this.activeAccordionSectionName = '';
+        } else {
+            this.activeAccordionSectionName = 'json'
+        }
     }
 
     nullifyReturns(){

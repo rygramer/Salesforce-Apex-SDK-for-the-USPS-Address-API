@@ -33,9 +33,47 @@ public with sharing class USPSResponse {
     public String returnText{get;private set;}
     public String carrierRoute{get;private set;}
     public String footnotes{get;private set;}
+    public List<String> footnotesDetails{
+        get{
+            if(footnotes == null) return null;
+            List<String> details = new List<String>();
+            for(Integer i = 0; i < footnotes.length(); i++){
+                details.add(
+                    FOOTNOTE_ENUMS.get(footnotes.substring(i,i+1))
+                );
+            }
+            return details;
+        }
+        private set;
+    }
     public String dPVConfirmation{get;private set;}
+    public String dPVConfirmationDetails{
+        get{
+            if(dPVConfirmation == null) return null;
+            return DPVCONFIRMATION_ENUMS.get(dPVConfirmation);
+        }
+        private set;
+    }
     public String dPVCMRA{get;private set;}
     public String dPVFootnotes{get;private set;}
+    public List<String> dPVFootnotesDetails{
+        get{
+            if(dPVFootnotes == null) return null;
+            List<String> details = new List<String>();
+            String currentEnum = '';
+            for(Integer i = 0; i < dPVFootnotes.length(); i++){
+                currentEnum += dPVFootnotes.substring(i,i+1);
+                if(currentEnum.length() == 2){
+                    details.add(
+                        DPVFOOTNOTES_ENUMS.get(currentEnum)
+                    );
+                    currentEnum = '';
+                }
+            }
+            return details;
+        }
+        private set;
+    }
     public String business{get;private set;}
     public String centralDeliveryPoint{get;private set;}
     public String vacant{get;private set;}

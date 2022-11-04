@@ -30,7 +30,7 @@ public with sharing class USPSShippingAPIService {
         protected final String USERID{
             get{
                 USERID = settings.get('USPS_Username')?.Value__c;
-                if(USERID == null) throw new USPSShippingAPIException(System.Label.USPS_Shipping_API_Username_Required_Message);
+                if(USERID == null) throw new USPSShippingAPIException('Your USPS Username must be configured. Navigate to the USPS Shipping API Setting Custom Metadata object. Open the USPS_Username record (if this record doesn\'t exist, create it). Complete the Value field with your USPS Username.');
                 return USERID;
             }
             private set;

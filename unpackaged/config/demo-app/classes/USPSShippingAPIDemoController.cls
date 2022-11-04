@@ -30,9 +30,12 @@ public with sharing class USPSShippingAPIDemoController {
         @AuraEnabled public String returnText;
         @AuraEnabled public String carrierRoute;
         @AuraEnabled public String footnotes;
+        @AuraEnabled public List<String> footnotesDetails;
         @AuraEnabled public String dPVConfirmation;
+        @AuraEnabled public String dPVConfirmationDetails;
         @AuraEnabled public String dPVCMRA;
         @AuraEnabled public String dPVFootnotes;
+        @AuraEnabled public List<String> dPVFootnotesDetails;
         @AuraEnabled public String business;
         @AuraEnabled public String centralDeliveryPoint;
         @AuraEnabled public String vacant;
@@ -55,9 +58,12 @@ public with sharing class USPSShippingAPIDemoController {
             this.returnText = response.returnText;
             this.carrierRoute = response.carrierRoute;
             this.footnotes = response.footnotes;
+            this.footnotesDetails = response.footnotesDetails;
             this.dPVConfirmation = response.dPVConfirmation;
+            this.dPVConfirmationDetails = response.dPVConfirmationDetails;
             this.dPVCMRA = response.dPVCMRA;
             this.dPVFootnotes = response.dPVFootnotes;
+            this.dPVFootnotesDetails = response.dPVFootnotesDetails;
             this.business = response.business;
             this.centralDeliveryPoint = response.centralDeliveryPoint;
             this.vacant = response.vacant;
