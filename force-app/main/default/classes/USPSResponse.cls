@@ -134,8 +134,6 @@ public with sharing class USPSResponse {
         for(Dom.XmlNode responseField : responseFields){
             String field = responseField.getName();
             String value = responseField.getText();
-            system.debug(field);
-            system.debug('    ' + value);
             switch on field{
                 when 'Error'{this.error = responseField.getChildElement('Description', null).getText();}
                 when 'FirmName'{this.firmName = value;}

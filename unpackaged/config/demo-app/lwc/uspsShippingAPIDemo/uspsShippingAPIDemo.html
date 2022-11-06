@@ -1,6 +1,6 @@
 <template>
         <lightning-card
-            title="Address to Verify"
+            title="Verify Address - LWC Example"
             icon-name="standard:address"
         >
             <lightning-spinner if:true={isLoading}></lightning-spinner>
@@ -52,21 +52,11 @@
                             disabled
                         >
                         </lightning-input-address>
-                        <lightning-accordion
-                            class="slds-var-p-top_small"
-                            onsectiontoggle={handleToggleSection}
-                            active-section-name={activeAccordionSectionName}
-                            allow-multiple-sections-open
+                        <c-json-pretty-printer
+                            json-to-pretty-print={jsonVerifiedAddress}
+                            toggle-title="Additional data from the USPS Verification Response"
                         >
-                            <lightning-accordion-section
-                                name="json"
-                                label="Additional data from the USPS Verification Response"
-                            >
-                                <pre>
-                                    {jsonVerifiedAddress}
-                                </pre>
-                            </lightning-accordion-section>
-                        </lightning-accordion>
+                        </c-json-pretty-printer>
                     </template>
                     <template if:true={error}>
                         <p class="slds-text-color_error">{error}</p>

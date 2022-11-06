@@ -1,0 +1,17 @@
+<template>
+    <lightning-accordion
+        class="slds-var-p-top_small"
+        onsectiontoggle={handleToggleSection}
+        active-section-name={activeAccordionSectionName}
+        allow-multiple-sections-open
+    >
+        <lightning-accordion-section
+            name="json"
+            label={toggleTitle}
+        >
+            <pre>
+                {jsonToPrettyPrint}
+            </pre>
+        </lightning-accordion-section>
+    </lightning-accordion>
+</template>

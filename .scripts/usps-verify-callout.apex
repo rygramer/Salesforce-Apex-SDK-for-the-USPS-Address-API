@@ -3,7 +3,7 @@ USPSRequest address = new USPSVerifyAddressRequest()
 .setCity('San Francisco')
 .setZip5('94105');
 
-List<USPSRequest> addresses = new List<USPSRequest>{address};
+List<USPSRequest> addresses = new List<USPSRequest>{address,address,address,address,address,address,address,address,address,address,address,address,address,address,address};
 
 List<USPSResponse> responses = new USPSShippingAPIService().setReturnAllData().send(addresses);
 system.debug('--------------> CALLOUT SIZE:' + limits.getCallouts());

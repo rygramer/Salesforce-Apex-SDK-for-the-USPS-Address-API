@@ -43,6 +43,7 @@ public with sharing class USPSShippingAPIService {
         protected Dom.Document responseXML;
         
         protected Integer batchLimit = 5;
+        protected String url = 'https://secure.shippingapis.com/ShippingAPI.dll';
         protected String endPoint;
         protected String rootTag;
         protected String parentTag;
@@ -69,7 +70,7 @@ public with sharing class USPSShippingAPIService {
                 String xml = EncodingUtil.urlEncode(this.requestXML.toXmlString(), 'UTF-8');
 
                 HttpRequest req = new HttpRequest();
-                req.setEndpoint('callout:USPS_Shipping_API/'+ this.endPoint + xml);
+                req.setEndpoint(this.url + this.endPoint + xml);
                 req.setMethod('GET');
 
                 HttpResponse response = new HTTP().send(req);

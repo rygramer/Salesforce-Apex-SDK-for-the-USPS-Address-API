@@ -47,7 +47,7 @@ tasks:
     retrieve_changes:
         options:
             path: unpackaged/config/demo-app
-            exclude: profiles, USPS_Shipping_API_Setting.USPS_Username
+            exclude: Profile, USPS_Shipping_API_Setting.USPS_Username
 
 flows:
     deploy_demo_app:

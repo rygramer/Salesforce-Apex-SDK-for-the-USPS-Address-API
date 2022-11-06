@@ -1,4 +1,4 @@
-public with sharing class USPSVerifyAddressRequest extends USPSRequest {
+public with sharing virtual class USPSVerifyAddressRequest extends USPSRequest {
     public USPSVerifyAddressRequest setFirmName(String firmName){
         if(firmName != null) this.firmName = firmName;
         return this;
