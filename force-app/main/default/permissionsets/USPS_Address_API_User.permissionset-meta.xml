@@ -2,8 +2,8 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
-        <name>USPS_Shipping_API_Setting__mdt</name>
+        <name>USPS_Address_API_Setting__mdt</name>
     </customMetadataTypeAccesses>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>USPS Shipping API User</label>
+    <label>USPS Address API User</label>
 </PermissionSet>

@@ -83,7 +83,7 @@ public with sharing class USPSResponse {
         'A' => 'The address was found to have a different 5-digit Zip Code than given in the submitted list. The correct Zip Code is shown in the output address.',
         'B' => 'The spelling of the city name and/or state abbreviation in the submitted address was found to be different than the standard spelling. The standard spelling of the city name and state abbreviation are shown in the output address.',
         'C' => 'The Zip Code in the submitted address could not be found because neither a valid city, state, nor valid 5-digit Zip Code was present. It is also recommended that the requestor check the submitted address for accuracy.',
-        'D' => 'This is a record listed by the United State Postal Service on the national Zip+4 file as a non-deliverable location. It is recommended that the requestor verify the accuracy of the submitted address.',
+        'D' => 'This is a record listed by the United State Postal Service on the national Zip+4 file as a non-deliverable location. It is recommended that the requestor Validate the accuracy of the submitted address.',
         'E' => 'Multiple records were returned, but each shares the same 5-digit Zip Code.',
         'F' => 'The address, exactly as submitted, could not be found in the city, state, or Zip Code provided.',
         'G' => 'Information in the firm line was determined to be a part of the address. It was moved out of the firm line and incorporated into the address line.',

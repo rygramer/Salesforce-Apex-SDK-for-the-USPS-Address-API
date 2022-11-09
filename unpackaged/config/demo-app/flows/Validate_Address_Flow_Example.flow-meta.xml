@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Verify_Shipping_Address</name>
-        <label>Verify Shipping Address</label>
+        <name>Validate_Shipping_Address</name>
+        <label>Validate Shipping Address</label>
         <locationX>176</locationX>
         <locationY>398</locationY>
-        <actionName>USPSShippingAPIInvocable</actionName>
+        <actionName>USPSAddressAPIInvocable</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Output_Screen</targetReference>
@@ -57,12 +57,12 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Verify_Shipping_Address</targetReference>
+            <targetReference>Validate_Shipping_Address</targetReference>
         </connector>
     </assignments>
     <environments>Default</environments>
-    <interviewLabel>Verify Address - Flow Example {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Verify Address - Flow Example</label>
+    <interviewLabel>Validate Address - Flow Example {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Validate Address - Flow Example</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -123,7 +123,7 @@
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
-        <nextOrFinishButtonLabel>Verify Address</nextOrFinishButtonLabel>
+        <nextOrFinishButtonLabel>Validate Address</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -142,7 +142,7 @@
             <inputParameters>
                 <name>city</name>
                 <value>
-                    <elementReference>Verify_Shipping_Address.response.city</elementReference>
+                    <elementReference>Validate_Shipping_Address.response.city</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -154,19 +154,19 @@
             <inputParameters>
                 <name>postalCode</name>
                 <value>
-                    <elementReference>Verify_Shipping_Address.response.zip</elementReference>
+                    <elementReference>Validate_Shipping_Address.response.zip</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>province</name>
                 <value>
-                    <elementReference>Verify_Shipping_Address.response.state</elementReference>
+                    <elementReference>Validate_Shipping_Address.response.state</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>street</name>
                 <value>
-                    <elementReference>Verify_Shipping_Address.response.street</elementReference>
+                    <elementReference>Validate_Shipping_Address.response.street</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -207,7 +207,7 @@
     <textTemplates>
         <name>USPS_Response_Text_Template</name>
         <isViewedAsPlainText>true</isViewedAsPlainText>
-        <text>{!Verify_Shipping_Address.response}</text>
+        <text>{!Validate_Shipping_Address.response}</text>
     </textTemplates>
     <variables>
         <name>USPS_Request</name>

@@ -1,7 +1,7 @@
 import { LightningElement } from 'lwc';
-import verifyAddress from '@salesforce/apex/USPSShippingAPIDemoController.verifyAddress';
+import validateAddress from '@salesforce/apex/USPSAddressAPIDemoController.validateAddress';
 
-export default class UspsShippingAPIDemo extends LightningElement {
+export default class USPSAddressAPIDemo extends LightningElement {
     street;
     city;
     state;
@@ -32,7 +32,7 @@ export default class UspsShippingAPIDemo extends LightningElement {
     handleClick(){
         this.isLoading = true;
         this.nullifyReturns();
-        verifyAddress({street: this.street, city: this.city, state: this.state, zip: this.zip})
+        validateAddress({street: this.street, city: this.city, state: this.state, zip: this.zip})
             .then(verifiedAddress => {
                 if(verifiedAddress.error){
                     this.error = verifiedAddress.error;

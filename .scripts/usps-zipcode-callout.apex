@@ -5,5 +5,5 @@ USPSRequest address = new USPSZipCodeLookupRequest()
 
 List<USPSRequest> addresses = new List<USPSRequest>{address};
 
-List<USPSResponse> responses = new USPSShippingAPIService().send(addresses);
+List<USPSResponse> responses = new USPSAddressAPIService().send(addresses);
 system.debug(responses);

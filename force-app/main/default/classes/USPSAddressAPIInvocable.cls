@@ -1,18 +1,18 @@
-public with sharing class USPSShippingAPIInvocable {
+public with sharing class USPSAddressAPIInvocable {
     @InvocableMethod(
-        label = 'Verify Shipping Addresses using USPS API'
-        description = 'Leverage the power of the USPS Shipping API to verify Shipping Addresses.'
+        label = 'Validate Addresses using the USPS Address API'
+        description = 'Leverage the power of the USPS Address API to validate Addresses.'
         category = 'USPS'
         iconName = 'slds:standard:address'
     )
     public static List<Output> send(List<Input> inputs){
-        List<USPSVerifyAddressRequest> requests = new List<USPSVerifyAddressRequest>();
+        List<USPSAddressValidateRequest> requests = new List<USPSAddressValidateRequest>();
         for(Input input : inputs){
-            if(input.request != null) requests.add(input.request.buildVerifyRequest());
-            if(input.requests != null) requests.addAll(USPSRequestAuraEnabled.buildVerifyRequests(input.requests));
+            if(input.request != null) requests.add(input.request.buildAddressValidateRequest());
+            if(input.requests != null) requests.addAll(USPSRequestAuraEnabled.buildAddressValidateRequests(input.requests));
         }
 
-        List<USPSResponseAuraEnabled> responses = USPSResponseAuraEnabled.buildAuraEnabledResponses(new USPSShippingAPIService().setReturnAllData().send(requests));
+        List<USPSResponseAuraEnabled> responses = USPSResponseAuraEnabled.buildAuraEnabledResponses(new USPSAddressAPIService().setReturnAllData().send(requests));
 
         List<Output> outputs = new List<Output>();
         for(Input input : inputs){
@@ -34,24 +34,24 @@ public with sharing class USPSShippingAPIInvocable {
 
     public class Input{
         @InvocableVariable(
-            label = 'Single Address to Verify'
+            label = 'Single Address to Validate'
         )
         public USPSRequestAuraEnabled request;
 
         @InvocableVariable(
-            label = 'Multiple Addresses to Verify'
+            label = 'Multiple Addresses to Validate'
         )
         public List<USPSRequestAuraEnabled> requests;
     }
 
     public class Output{
         @InvocableVariable(
-            label = 'Verified Single Address'
+            label = 'Validated Single Address'
         )
         public USPSResponseAuraEnabled response;
 
         @InvocableVariable(
-            label = 'Verified Multiple Addresses'
+            label = 'Validated Multiple Addresses'
         )
         public List<USPSResponseAuraEnabled> responses;
     }

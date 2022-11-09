@@ -1,5 +1,5 @@
 @isTest
-public with sharing class USPSShippingAPIHttpMock implements HttpCalloutMock{
+public with sharing class USPSAddressAPIHttpMock implements HttpCalloutMock{
     
     public HttpResponse respond(HttpRequest request){
         Dom.Document doc = new Dom.Document();

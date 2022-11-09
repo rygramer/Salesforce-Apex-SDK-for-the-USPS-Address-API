@@ -5,11 +5,11 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>USPSShippingAPIDemoController</apexClass>
+        <apexClass>USPSAddressAPIDemoController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>USPSShippingAPIInvocable</apexClass>
+        <apexClass>USPSAddressAPIInvocable</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -17,9 +17,9 @@
         <enabled>true</enabled>
     </classAccesses>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>USPS Shipping API Demo Viewer</label>
+    <label>USPS Address API Demo Viewer</label>
     <tabSettings>
-        <tab>USPS_Shipping_API_Demo</tab>
+        <tab>USPS_Address_API_Demo</tab>
         <visibility>Visible</visibility>
     </tabSettings>
 </PermissionSet>

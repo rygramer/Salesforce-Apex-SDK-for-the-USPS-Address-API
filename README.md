@@ -1,7 +1,6 @@
-# USPS-Api-Playground
+# Salesforce Apex SDK for the USPS Address API
 
-Add a brief description of this project here, in Markdown format.
-It will be shown on the main page of the project's GitHub repository.
+This project aims to be a comprehensive Salesforce Apex SDK for the [USPS Address API](https://www.usps.com/business/web-tools-apis/address-information-api.htm).
 
 ## Development
 

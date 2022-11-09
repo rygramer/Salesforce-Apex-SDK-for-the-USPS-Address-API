@@ -1,40 +1,40 @@
-public with sharing virtual class USPSVerifyAddressRequest extends USPSRequest {
-    public USPSVerifyAddressRequest setFirmName(String firmName){
+public with sharing virtual class USPSAddressValidateRequest extends USPSRequest {
+    public USPSAddressValidateRequest setFirmName(String firmName){
         if(firmName != null) this.firmName = firmName;
         return this;
     }
 
-    public USPSVerifyAddressRequest setAddress1(String address1){
+    public USPSAddressValidateRequest setAddress1(String address1){
         if(address1 != null) this.address1 = address1;
         return this;
     }
 
-    public USPSVerifyAddressRequest setAddress2(String address2){
+    public USPSAddressValidateRequest setAddress2(String address2){
         if(address2 != null) this.address2 = address2;
         return this;
     }
 
-    public USPSVerifyAddressRequest setCity(String city){
+    public USPSAddressValidateRequest setCity(String city){
         if(city != null) this.city = city;
         return this;
     }
 
-    public USPSVerifyAddressRequest setState(String state){
+    public USPSAddressValidateRequest setState(String state){
         if(state != null) this.state = state;
         return this;
     }
 
-    public USPSVerifyAddressRequest setUrbanization(String urbanization){
+    public USPSAddressValidateRequest setUrbanization(String urbanization){
         if(urbanization != null) this.urbanization = urbanization;
         return this;
     }
 
-    public USPSVerifyAddressRequest setZip5(String zip5){
+    public USPSAddressValidateRequest setZip5(String zip5){
         if(zip5 != null) this.zip5 = zip5;
         return this;
     }
 
-    public USPSVerifyAddressRequest setZip4(String zip4){
+    public USPSAddressValidateRequest setZip4(String zip4){
         if(zip4 != null) this.zip4 = zip4;
         return this;
     }
@@ -52,6 +52,6 @@ public with sharing virtual class USPSVerifyAddressRequest extends USPSRequest {
     }
 
     public override String getName(){
-        return USPSVerifyAddressRequest.class.getName();
+        return USPSAddressValidateRequest.class.getName();
     }
 }

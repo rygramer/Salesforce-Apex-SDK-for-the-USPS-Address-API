@@ -10,8 +10,8 @@ public with sharing class USPSRequestAuraEnabled {
 
     public USPSRequestAuraEnabled() {}
 
-    public USPSVerifyAddressRequest buildVerifyRequest(){
-        USPSVerifyAddressRequest verify = new USPSVerifyAddressRequest()
+    public USPSAddressValidateRequest buildAddressValidateRequest(){
+        USPSAddressValidateRequest Validate = new USPSAddressValidateRequest()
         .setFirmName(firmName)
         .setAddress1(address1)
         .setAddress2(address2)
@@ -20,13 +20,13 @@ public with sharing class USPSRequestAuraEnabled {
         .setUrbanization(urbanization)
         .setZip5(zip5)
         .setZip4(zip4);
-        return verify;
+        return Validate;
     }
 
-    public static List<USPSVerifyAddressRequest> buildVerifyRequests(List<USPSRequestAuraEnabled> auraRequests){
-        List<USPSVerifyAddressRequest> requests = new List<USPSVerifyAddressRequest>();
+    public static List<USPSAddressValidateRequest> buildAddressValidateRequests(List<USPSRequestAuraEnabled> auraRequests){
+        List<USPSAddressValidateRequest> requests = new List<USPSAddressValidateRequest>();
         for(USPSRequestAuraEnabled auraRequest : auraRequests){
-            requests.add(auraRequest.buildVerifyRequest());
+            requests.add(auraRequest.buildAddressValidateRequest());
         }
         return requests;
     }

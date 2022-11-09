@@ -1,16 +1,16 @@
-public with sharing class USPSShippingAPIService {
+public with sharing class USPSAddressAPIService {
     private final Map<String,String> CLASS_MAPPING = new Map<String,String>{
-        'USPSVerifyAddressRequest' => 'USPSShippingAPIService.Verify',
-        'USPSZipCodeLookupRequest' => 'USPSShippingAPIService.ZipCodeLookup',
-        'USPSCityStateLookupRequest' => 'USPSShippingAPIService.CityStateLookup'
+        'USPSAddressValidateRequest' => 'USPSAddressAPIService.Validate',
+        'USPSZipCodeLookupRequest' => 'USPSAddressAPIService.ZipCodeLookup',
+        'USPSCityStateLookupRequest' => 'USPSAddressAPIService.CityStateLookup'
     };
 
     private String revision = '0';
 
     @TestVisible
-    private static Map<String,USPS_Shipping_API_Setting__mdt> settings = USPS_Shipping_API_Setting__mdt.getAll();
+    private static Map<String,USPS_Address_API_Setting__mdt> settings = USPS_Address_API_Setting__mdt.getAll();
 
-    public USPSShippingAPIService setReturnAllData(){
+    public USPSAddressAPIService setReturnAllData(){
         this.revision = '1';
         return this;
     }
@@ -20,17 +20,17 @@ public with sharing class USPSShippingAPIService {
     }
 
     public List<USPSResponse> send(List<USPSRequest> requests){
-        USPSShippingAPI api = (USPSShippingAPI)Type.forName(CLASS_MAPPING.get(requests.get(0).getName())).newInstance();
+        USPSAddressAPI api = (USPSAddressAPI)Type.forName(CLASS_MAPPING.get(requests.get(0).getName())).newInstance();
         api.setRequests(requests);
         api.setRevision(this.revision);
         return api.send();
     }
 
-    private abstract class USPSShippingAPI{
+    private abstract class USPSAddressAPI{
         protected final String USERID{
             get{
                 USERID = settings.get('USPS_Username')?.Value__c;
-                if(USERID == null) throw new USPSShippingAPIException('Your USPS Username must be configured. Navigate to the USPS Shipping API Setting Custom Metadata object. Open the USPS_Username record (if this record doesn\'t exist, create it). Complete the Value field with your USPS Username.');
+                if(USERID == null) throw new USPSAddressAPIException('Your USPS Username must be configured. Navigate to the USPS Address API Setting Custom Metadata object. Open the USPS_Username record (if this record doesn\'t exist, create it). Complete the Value field with your USPS Username.');
                 return USERID;
             }
             private set;
@@ -50,12 +50,12 @@ public with sharing class USPSShippingAPIService {
 
         protected String revision;
 
-        public USPSShippingAPI setRequests(List<USPSRequest> allRequests){
+        public USPSAddressAPI setRequests(List<USPSRequest> allRequests){
             this.allRequests = allRequests;
             return this;
         }
 
-        public USPSShippingAPI setRevision(String revision){
+        public USPSAddressAPI setRevision(String revision){
             this.revision = revision;
             return this;
         }
@@ -103,9 +103,9 @@ public with sharing class USPSShippingAPIService {
             return batchedRequests;
         }
 
-        private abstract USPSShippingAPI writeXML();
+        private abstract USPSAddressAPI writeXML();
 
-        private USPSShippingAPI processChildNodes(Dom.XmlNode parent, String tagName){
+        private USPSAddressAPI processChildNodes(Dom.XmlNode parent, String tagName){
             Integer counter = 0;
             for(USPSRequest request : this.currentRequests){
                 Dom.XmlNode xml = parent.addChildElement(tagName, null, null);
@@ -118,10 +118,10 @@ public with sharing class USPSShippingAPIService {
             return this;
         }
 
-        private USPSShippingAPI readXML(){
+        private USPSAddressAPI readXML(){
             Dom.XmlNode root = this.responseXML.getRootElement();
 
-            if(root.getName() == 'Error') throw new USPSShippingAPIException(root.getChildElement('Description', null).getText());
+            if(root.getName() == 'Error') throw new USPSAddressAPIException(root.getChildElement('Description', null).getText());
 
             for(Dom.XmlNode child : root.getChildElements()){
                 this.responses.add(new USPSResponse(child.getChildElements()));
@@ -131,14 +131,14 @@ public with sharing class USPSShippingAPIService {
         }
     }
 
-    public class Verify extends USPSShippingAPI{
-        public Verify(){
+    public class Validate extends USPSAddressAPI{
+        public Validate(){
             this.endPoint = '?API=Verify&XML=';
             this.rootTag = 'AddressValidateRequest';
             this.parentTag = 'Address';
         }
 
-        private override USPSShippingAPI writeXML(){
+        private override USPSAddressAPI writeXML(){
             this.requestXML = new Dom.Document();
         
             Dom.XmlNode root = this.requestXML.createRootElement(this.rootTag, null, null);
@@ -151,14 +151,14 @@ public with sharing class USPSShippingAPIService {
         }
     }
 
-    public class ZipCodeLookup extends USPSShippingAPI{
+    public class ZipCodeLookup extends USPSAddressAPI{
         public ZipCodeLookup(){
             this.endPoint = '?API=ZipCodeLookup&XML=';
             this.rootTag = 'ZipCodeLookupRequest';
             this.parentTag = 'Address';
         }
 
-        private override USPSShippingAPI writeXML(){
+        private override USPSAddressAPI writeXML(){
             this.requestXML = new Dom.Document();
         
             Dom.XmlNode root = this.requestXML.createRootElement(this.rootTag, null, null);
@@ -170,14 +170,14 @@ public with sharing class USPSShippingAPIService {
         }
     }
 
-    public class CityStateLookup extends USPSShippingAPI{
+    public class CityStateLookup extends USPSAddressAPI{
         public CityStateLookup(){
             this.endPoint = '?API=CityStateLookup&XML=';
             this.rootTag = 'CityStateLookupRequest';
             this.parentTag = 'ZipCode';
         }
 
-        private override USPSShippingAPI writeXML(){
+        private override USPSAddressAPI writeXML(){
             this.requestXML = new Dom.Document();
         
             Dom.XmlNode root = this.requestXML.createRootElement(this.rootTag, null, null);
@@ -189,5 +189,5 @@ public with sharing class USPSShippingAPIService {
         }
     }
 
-    public class USPSShippingAPIException extends Exception{}
+    public class USPSAddressAPIException extends Exception{}
 }
