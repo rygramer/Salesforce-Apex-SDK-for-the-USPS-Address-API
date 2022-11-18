@@ -73,6 +73,10 @@ public with sharing class USPSAddressAPIService {
                 req.setEndpoint(this.url + this.endPoint + xml);
                 req.setMethod('GET');
 
+                // This callout is in the middle of a loop!
+                // The reason we're doing this is because the
+                // USPS Address API can only validate 5 addresses at a time;
+                // so we're batching the callout in groups of 5.
                 HttpResponse response = new HTTP().send(req);
                 this.responseXML = response.getBodyDocument();
 
