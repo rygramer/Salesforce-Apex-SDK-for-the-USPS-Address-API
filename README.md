@@ -10,7 +10,7 @@ To work on this project in a scratch org:
 2. [Set up CumulusCI](https://cumulusci.readthedocs.io/en/latest/tutorial.html)
 3. Run `cci flow run dev_org --org dev` to deploy this project.
 
-## USPS Address API Username
+### USPS Address API Username
 
 After you register for a USPS Web Tools API Portal Account, you will be emailed a `USPS Username`. Create a new USPS Address API Setting Custom Metadata record using that username:
 | Field | Value |
@@ -24,6 +24,9 @@ After you register for a USPS Web Tools API Portal Account, you will be emailed 
 ## Usage in Apex
 
 There are three different USPS Address APIs that are exposed in this SDK:
+1. Address Validation
+2. ZIP Code Lookup
+3. City State Lookup
 
 ### [Address Validation API](https://www.usps.com/business/web-tools-apis/address-information-api.htm#_Toc110511810)
 
@@ -43,7 +46,7 @@ USPSResponse response = new USPSAddressAPIService().send(address);
 Assert.areEqual('94105-2533', response.zip, 'Well, hello Zip+4.');
 ```
 
-You can validate multiple addresses by building a `List<USPSAddressValidateRequest>` objects. Be aware that the USPS Address API can only validate 5 addresses at a time, so the callouts are batched accordingly. If you build 10 request objects, you will consume 2 callouts. If you build 501 request objects, [your transaction will fail](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_callouts_timeouts.htm).
+You can validate multiple addresses by building `List<USPSAddressValidateRequest>` objects. Be aware that the USPS Address API can only validate 5 addresses at a time, so the callouts are batched accordingly. If you build 10 request objects, you will consume 2 callouts. If you build 501 request objects, [your transaction will fail](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_callouts_timeouts.htm).
 ```
 USPSRequest address1 = new USPSAddressValidateRequest()
 .setAddress2('415 Mission St')
@@ -91,6 +94,6 @@ USPSResponse response = new USPSAddressAPIService().send(address);
 Assert.areEqual('94105-2533', response.zip, 'You\'ll probably find the Address Validation API more useful.');
 ```
 
-### [CityStateLookup API](https://www.usps.com/business/web-tools-apis/address-information-api.htm#_Toc110511824)
+### [City State Lookup API](https://www.usps.com/business/web-tools-apis/address-information-api.htm#_Toc110511824)
 
 > Returns the city and state corresponding to the given ZIP Code.
