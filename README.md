@@ -4,6 +4,8 @@ This project aims to be a comprehensive Salesforce Apex SDK for the [USPS Addres
 
 ![Screenshot of the USPS Address API Demo App](images/Validate_Address_LWC_Example.png "USPS Address API Demo App")
 
+*This screenshot is from the USPS Address API Demo App that is located at `unpackaged/config/demo-app`. The demo app is not included in the Unlocked Package.*
+
 ## Getting Started
 
 To work on this project in a scratch org:
