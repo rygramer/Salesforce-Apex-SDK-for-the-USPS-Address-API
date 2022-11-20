@@ -32,7 +32,7 @@ There are three different USPS Address APIs that are exposed in this SDK:
 
 > Corrects errors in street addresses, including abbreviations and missing information, and supplies ZIP Codes and ZIP Codes + 4.
 
-You will probably use this API the most. In fact, this is the API exposed in the Invocable Method that ships with the SDK.
+You will probably use this API the most. In fact, this is the API exposed in the Invocable Method that ships with this SDK.
 
 You can validate a single address by building a `USPSAddressValidateRequest` object.
 ```
