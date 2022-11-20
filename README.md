@@ -2,6 +2,8 @@
 
 This project aims to be a comprehensive Salesforce Apex SDK for the [USPS Address API](https://www.usps.com/business/web-tools-apis/address-information-api.htm).
 
+![Screenshot of the USPS Address API Demo App](images/Validate_Address_LWC_Example.png "USPS Address API Demo App")
+
 ## Getting Started
 
 To work on this project in a scratch org:
@@ -19,7 +21,7 @@ After you register for a USPS Web Tools API Portal Account, you will be emailed 
 | USPS Address API Setting Name | `USPS_Username` |
 | Value | `Your Username` |
 
-![Screenshot of the USPS Address API Setting Custom Metadata record](.images/USPS_Address_API_Setting_CMDT_Config.png "USPS Username Configuration")
+![Screenshot of the USPS Address API Setting Custom Metadata record](images/USPS_Address_API_Setting_CMDT_Config.png "USPS Username Configuration")
 
 ## Usage in Apex
 
@@ -37,19 +39,19 @@ You will probably use this API the most. In fact, this is the API exposed in the
 You can validate a single address by building a `USPSAddressValidateRequest` object.
 ```
 USPSRequest address = new USPSAddressValidateRequest()
-.setAddress2('415 Mission St')
+.setAddress2('415 Mission Street')
 .setCity('San Francisco')
 .setZip5('94105');
 
 USPSResponse response = new USPSAddressAPIService().send(address);
 
-Assert.areEqual('94105-2533', response.zip, 'Well, hello Zip+4.');
+Assert.areEqual('415 MISSION ST', response.street, 'C! A! P! S! CAPS CAPS CAPS!');
 ```
 
 You can validate multiple addresses by building `List<USPSAddressValidateRequest>` objects. Be aware that the USPS Address API can only validate 5 addresses at a time, so the callouts are batched accordingly. If you build 10 request objects, you will consume 2 callouts. If you build 501 request objects, [your transaction will fail](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_callouts_timeouts.htm).
 ```
 USPSRequest address1 = new USPSAddressValidateRequest()
-.setAddress2('415 Mission St')
+.setAddress2('415 Mission Street')
 .setCity('San Francisco')
 .setZip5('94105');
 
@@ -62,8 +64,8 @@ List<USPSRequest> addresses = new List<USPSRequest>{address1,address2};
 
 List<USPSResponse> responses = new USPSAddressAPIService().send(addresses);
 
-Assert.areEqual('94105-2533', responses[0].zip, 'Zip+4 x 1');
-Assert.areEqual('95014-0642', responses[1].zip, 'Zip+4 x 2');
+Assert.areEqual('SAN FRANCISCO', responses[0].city, '🌉');
+Assert.areEqual('CUPERTINO', responses[1].city, '');
 ```
 
 By default the Address Validation API returns a subset of fields in it's response. If you'd like for the API to return all of the fields, call the `setReturnAllData()` method.
@@ -75,7 +77,7 @@ USPSRequest address = new USPSAddressValidateRequest()
 
 USPSResponse response = new USPSAddressAPIService().setReturnAllData().send(address);
 
-Assert.areEqual('94105-2533', response.zip, 'Well, hello Zip+4.');
+Assert.areEqual('Zip+4 information indicated this address is a building. The address as submitted does not contain an apartment/suite number.', response.footnotesDetails[0], 'Be sure to check out the demo app for a glimpse at all of the returns.');
 ```
 
 ### [ZIP Code Lookup](https://www.usps.com/business/web-tools-apis/address-information-api.htm#_Toc110511817)
@@ -91,9 +93,11 @@ USPSRequest address = new USPSZipCodeLookupRequest()
 
 USPSResponse response = new USPSAddressAPIService().send(address);
 
-Assert.areEqual('94105-2533', response.zip, 'You\'ll probably find the Address Validation API more useful.');
+Assert.areEqual('2533', response.zip4, 'Well, hello Zip+4.');
 ```
 
 ### [City State Lookup](https://www.usps.com/business/web-tools-apis/address-information-api.htm#_Toc110511824)
 
 > Returns the city and state corresponding to the given ZIP Code.
+
+You get the picture: use `USPSCityStateLookupRequest`.

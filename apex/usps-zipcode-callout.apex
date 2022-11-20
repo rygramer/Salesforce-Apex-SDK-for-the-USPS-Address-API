@@ -5,4 +5,4 @@ USPSRequest address = new USPSZipCodeLookupRequest()
 
 USPSResponse response = new USPSAddressAPIService().send(address);
 
-Assert.areEqual('94105-2533', response.zip, 'You\'ll probably find the Address Validation API more useful.');
+Assert.areEqual('2533', response.zip4, 'Well, hello Zip+4.');

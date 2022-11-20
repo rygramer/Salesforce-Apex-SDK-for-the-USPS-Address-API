@@ -7,8 +7,14 @@ public with sharing class USPSAddressAPIDemoControllerTest {
 
         instantiateSettings();
 
+        USPSRequestAuraEnabled request = new USPSRequestAuraEnabled();
+        request.address2 = 'street';
+        request.city = 'city';
+        request.state = 'state';
+        request.zip5 = 'zip';
+
         Test.startTest();
-        USPSResponseAuraEnabled response = USPSAddressAPIDemoController.validateAddress('street', 'city', 'state', 'zip');
+        USPSResponseAuraEnabled response = USPSAddressAPIDemoController.validateAddress(JSON.serialize(request));
         Test.stopTest();
 
         system.assert(response.city == 'city', 'The response matches what was set in the HttpMock class.');

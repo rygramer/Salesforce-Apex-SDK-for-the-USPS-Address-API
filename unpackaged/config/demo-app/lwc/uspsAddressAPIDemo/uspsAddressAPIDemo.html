@@ -30,31 +30,31 @@
                 </div>
             </div>
         </lightning-card>
-        <template if:true={verified}>
+        <template if:true={validated}>
             <div class="slds-var-m-top_small"></div>
             <lightning-card
-                title="USPS Verification Response"
+                title="USPS Validation Response"
                 icon-name={icon}
             >
                 <div class="slds-var-p-around_small">
-                    <template if:true={verifiedAddress}>
+                    <template if:true={validatedAddress}>
                         <lightning-input-address
                             street-label="Street"
-                            street={verifiedAddress.street}
+                            street={validatedAddress.street}
                             city-label="City"
-                            city={verifiedAddress.city}
+                            city={validatedAddress.city}
                             province-label="State"
-                            province={verifiedAddress.state}
+                            province={validatedAddress.state}
                             postal-code-label="Zip Code"
-                            postal-code={verifiedAddress.zip}
+                            postal-code={validatedAddress.zip}
                             country-label="Country"
                             country="United States"
                             disabled
                         >
                         </lightning-input-address>
                         <c-json-pretty-printer
-                            json-to-pretty-print={jsonVerifiedAddress}
-                            toggle-title="Additional data from the USPS Verification Response"
+                            json-to-pretty-print={jsonValidatedAddress}
+                            toggle-title="Additional data from the USPS Validation Response"
                         >
                         </c-json-pretty-printer>
                     </template>
