@@ -28,7 +28,7 @@ There are three different USPS Address APIs that are exposed in this SDK:
 2. ZIP Code Lookup
 3. City State Lookup
 
-### [Address Validation API](https://www.usps.com/business/web-tools-apis/address-information-api.htm#_Toc110511810)
+### [Address Validation](https://www.usps.com/business/web-tools-apis/address-information-api.htm#_Toc110511810)
 
 > Corrects errors in street addresses, including abbreviations and missing information, and supplies ZIP Codes and ZIP Codes + 4.
 
@@ -78,7 +78,7 @@ USPSResponse response = new USPSAddressAPIService().setReturnAllData().send(addr
 Assert.areEqual('94105-2533', response.zip, 'Well, hello Zip+4.');
 ```
 
-### [ZIP Code Lookup API](https://www.usps.com/business/web-tools-apis/address-information-api.htm#_Toc110511817)
+### [ZIP Code Lookup](https://www.usps.com/business/web-tools-apis/address-information-api.htm#_Toc110511817)
 
 > Returns the ZIP Code and ZIP Code + 4 corresponding to the given address, city, and state.
 
@@ -94,6 +94,6 @@ USPSResponse response = new USPSAddressAPIService().send(address);
 Assert.areEqual('94105-2533', response.zip, 'You\'ll probably find the Address Validation API more useful.');
 ```
 
-### [City State Lookup API](https://www.usps.com/business/web-tools-apis/address-information-api.htm#_Toc110511824)
+### [City State Lookup](https://www.usps.com/business/web-tools-apis/address-information-api.htm#_Toc110511824)
 
 > Returns the city and state corresponding to the given ZIP Code.
