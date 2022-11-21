@@ -25,7 +25,45 @@ After you register for a USPS Web Tools API Portal Account, you will be emailed 
 
 ![Screenshot of the USPS Address API Setting Custom Metadata record](images/USPS_Address_API_Setting_CMDT_Config.png "USPS Username Configuration")
 
-## Usage in Apex
+## Flow Support
+
+This SDK includes an Action that can be used in Flow Builder: `USPSAddressAPIInvocable`. Be sure to review the `Validate Address - Flow Example` Screen Flow that is included in the demo app for an example of how to use this Action.
+
+### Validate Address - Flow Example
+
+![Screenshot of the full Validate Address - Flow Example screen flow](images/Full_Flow_Screenshot.png "Validate Address - Flow Example screen flow")
+
+*This screenshot is from the USPS Address API Demo App that is located at `unpackaged/config/demo-app`. The demo app is not included in the Unlocked Package.*
+
+### 1. Input Screen
+
+Create a screen and use the standard Address input component.
+
+![Screenshot of Screen 1 - Input Address](images/Screen_1_Input_Address.png "Screen 1 - Input Address")
+
+### 2. Assign USPS Request
+
+Create an Apex-Defined Variable of type `USPSRequestAuraEnabled`.
+
+![Screenshot of Apex-Defined Variable of type USPSRequestAuraEnabled](images/USPSRequestAuraEnabled_Variable.png "Apex-Defined Variable of type USPSRequestAuraEnabled")
+
+Create an Assignment, and assign the `USPS_Request` variable equal to the inputs from `Input_Address`.
+
+![Screenshot of Assign USPS_Request](images/Assign_USPS_Request.png "Assign USPS_Request")
+
+### 3. Create an Apex Action
+
+Search for `Validate Addresses using the USPS Address API` in the Action Search. Pass the `USPS_Request` variable into the Action's `Single Address to Validate` input. If you'd like to validate multiple addresses, build a ***collection*** of `USPSRequestAuraEnabled` variables and pass that into the Action's `Multiple Addresses to Validate` (not pictured).
+
+![Screenshot of Validate Addresses using the USPS Address API Apex Action](images/Apex_Action.png "Apex Action")
+
+### 4. Output Screen
+
+Create a screen and, again, use the standard Address input component. This time, specify the values of the fields with the `Validated Single Address` output from the `Validate_Shipping_Address` Action. If you validated multiple addresses, you can loop through the Action's `Validated Multiple Addresses` (not pictured).
+
+![Screenshot of Screen 2 - Output Address](images/Screen_2_Output_Address.png "Screen 2 - Output Address")
+
+## Apex Support
 
 There are three different USPS Address APIs that are exposed in this SDK:
 1. Address Validation
@@ -50,7 +88,7 @@ USPSResponse response = new USPSAddressAPIService().send(address);
 Assert.areEqual('415 MISSION ST', response.street, 'C! A! P! S! CAPS CAPS CAPS!');
 ```
 
-You can validate multiple addresses by building `List<USPSAddressValidateRequest>` objects. Be aware that the USPS Address API can only validate 5 addresses at a time, so the callouts are batched accordingly. If you build 10 request objects, you will consume 2 callouts. If you build 501 request objects, [your transaction will fail](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_callouts_timeouts.htm).
+You can validate multiple addresses by building `List<USPSAddressValidateRequest>` objects.
 ```
 USPSRequest address1 = new USPSAddressValidateRequest()
 .setAddress2('415 Mission Street')
@@ -103,3 +141,7 @@ Assert.areEqual('2533', response.zip4, 'Well, hello Zip+4.');
 > Returns the city and state corresponding to the given ZIP Code.
 
 You get the picture: use `USPSCityStateLookupRequest`.
+
+# ⚠️ Bulkification Warning
+
+Be aware that the USPS Address API can only validate 5 addresses at a time, so the callouts are batched accordingly. If you build 10 request objects, you will consume 2 callouts. If you build 501 request objects, [your transaction will fail](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_callouts_timeouts.htm). This warning applies to both ***Flow Support*** and ***Apex Support***.

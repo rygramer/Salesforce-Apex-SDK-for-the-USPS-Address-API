@@ -22,7 +22,7 @@ public with sharing class USPSAddressAPIInvocable {
             }
             if(input.requests != null){
                 output.responses = new List<USPSResponseAuraEnabled>();
-                for(integer i = 1; i <= output.responses.size(); i++){
+                for(Integer i = 1; i <= input.requests.size(); i++){
                     output.responses.add(responses.remove(0));
                 }
             }
@@ -34,12 +34,14 @@ public with sharing class USPSAddressAPIInvocable {
 
     public class Input{
         @InvocableVariable(
-            label = 'Single Address to Validate'
+            label = '1. Single Address to Validate (Apex-Defined Variable of type USPSRequestAuraEnabled)'
+            description = 'Input must be Apex-Defined Variable of type USPSRequestAuraEnabled'
         )
         public USPSRequestAuraEnabled request;
 
         @InvocableVariable(
-            label = 'Multiple Addresses to Validate'
+            label = '2. Multiple Addresses to Validate (Apex-Defined Variabled of type USPSRequestAuraEnabled Collection)'
+            description = 'Input must be Apex-Defined Variabled of type USPSRequestAuraEnabled Collection'
         )
         public List<USPSRequestAuraEnabled> requests;
     }
@@ -47,11 +49,13 @@ public with sharing class USPSAddressAPIInvocable {
     public class Output{
         @InvocableVariable(
             label = 'Validated Single Address'
+            description = 'Output will be Apex-Defined Variable of type USPSResponseAuraEnabled'
         )
         public USPSResponseAuraEnabled response;
 
         @InvocableVariable(
             label = 'Validated Multiple Addresses'
+            description = 'Output will be Apex-Defined Variable of type USPSResponseAuraEnabled Collection'
         )
         public List<USPSResponseAuraEnabled> responses;
     }

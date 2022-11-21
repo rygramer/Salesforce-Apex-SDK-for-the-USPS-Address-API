@@ -122,6 +122,47 @@ public with sharing class USPSAddressAPITest {
         system.assert(auraResponses[0].address2 == 'address2', 'The response matches what was set in the HttpMock class.');
     }
 
+    @isTest
+    public static void invocable_single(){
+        Test.setMock(HttpCalloutMock.class, new USPSAddressAPIHttpMock());
+
+        USPSRequestAuraEnabled address1 = new USPSRequestAuraEnabled();
+        address1.address2 = 'address2';
+        USPSAddressAPIInvocable.Input input = new USPSAddressAPIInvocable.Input();
+        input.request = address1;
+        List<USPSAddressAPIInvocable.Input> inputs = new List<USPSAddressAPIInvocable.Input>{input};
+
+        instantiateSettings();
+
+        Test.startTest();
+        List<USPSAddressAPIInvocable.Output> outputs = USPSAddressAPIInvocable.send(inputs);
+        Test.stopTest();
+
+        system.assert(outputs.size() == 1, 'There is one returned output');
+        system.assert(outputs[0].response.address2 == 'address2', 'The response matches what was set in the HttpMock class.');
+    }
+
+    @isTest
+    public static void invocable_bulk(){
+        Test.setMock(HttpCalloutMock.class, new USPSAddressAPIHttpMock());
+
+        USPSRequestAuraEnabled address1 = new USPSRequestAuraEnabled();
+        address1.address2 = 'address2';
+
+        USPSAddressAPIInvocable.Input input = new USPSAddressAPIInvocable.Input();
+        input.requests = new List<USPSRequestAuraEnabled>{address1};
+        List<USPSAddressAPIInvocable.Input> inputs = new List<USPSAddressAPIInvocable.Input>{input};
+
+        instantiateSettings();
+
+        Test.startTest();
+        List<USPSAddressAPIInvocable.Output> outputs = USPSAddressAPIInvocable.send(inputs);
+        Test.stopTest();
+
+        system.assert(outputs.size() == 1, 'There is one returned output');
+        system.assert(outputs[0].responses.size() == 1, 'The nested response should equal one.');
+    }
+
     private static void instantiateSettings(){
         USPS_Address_API_Setting__mdt setting = new USPS_Address_API_Setting__mdt(
             DeveloperName = 'USPS_Username',

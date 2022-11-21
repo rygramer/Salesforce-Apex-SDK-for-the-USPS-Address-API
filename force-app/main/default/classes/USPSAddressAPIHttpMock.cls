@@ -2,6 +2,8 @@
 public with sharing class USPSAddressAPIHttpMock implements HttpCalloutMock{
     
     public HttpResponse respond(HttpRequest request){
+        // It's worth noting that we're only building ONE response xml object.
+        // So this will not behave as expected if you test with multiple request objects.
         Dom.Document doc = new Dom.Document();
         Dom.XmlNode root = doc.createRootElement('MockedRoot', null, null);
         Dom.XmlNode address = root.addChildElement('Address', null, null);

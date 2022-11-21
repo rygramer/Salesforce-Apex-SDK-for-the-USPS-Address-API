@@ -11,17 +11,6 @@ project:
     source_format: sfdx
 
 tasks:
-    robot:
-        options:
-            suites: robot/Apex-SDK-for-USPS-Address-API/tests
-            options:
-                outputdir: robot/Apex-SDK-for-USPS-Address-API/results
-
-    robot_testdoc:
-        options:
-            path: robot/Apex-SDK-for-USPS-Address-API/tests
-            output: robot/Apex-SDK-for-USPS-Address-API/doc/USPS-Api-Playground_tests.html
-
     run_tests:
         options:
             required_org_code_coverage_percent: 90

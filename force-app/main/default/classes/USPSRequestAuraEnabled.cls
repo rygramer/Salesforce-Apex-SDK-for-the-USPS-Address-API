@@ -11,7 +11,7 @@ public with sharing class USPSRequestAuraEnabled {
     public USPSRequestAuraEnabled() {}
 
     public USPSAddressValidateRequest buildAddressValidateRequest(){
-        USPSAddressValidateRequest Validate = new USPSAddressValidateRequest()
+        USPSAddressValidateRequest validate = new USPSAddressValidateRequest()
         .setFirmName(firmName)
         .setAddress1(address1)
         .setAddress2(address2)
@@ -20,7 +20,7 @@ public with sharing class USPSRequestAuraEnabled {
         .setUrbanization(urbanization)
         .setZip5(zip5)
         .setZip4(zip4);
-        return Validate;
+        return validate;
     }
 
     public static List<USPSAddressValidateRequest> buildAddressValidateRequests(List<USPSRequestAuraEnabled> auraRequests){
