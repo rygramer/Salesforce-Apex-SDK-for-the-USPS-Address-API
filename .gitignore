@@ -2,6 +2,7 @@
 .cci
 /src.orig
 /src
+test_results.**
 
 # Python
 *.pyc

@@ -1,0 +1,67 @@
+<template>
+        <lightning-card
+            title="Validate Address - LWC Example"
+            icon-name="standard:address"
+        >
+            <lightning-spinner if:true={isLoading}></lightning-spinner>
+            <div class="slds-var-p-around_small">
+                <lightning-input-address
+                    address-label="Address"
+                    show-address-lookup	
+                    street-label="Street"
+                    city-label="City"
+                    province-label="State"
+                    postal-code-label="Zip Code"
+                    country-label="Country"
+                    country="United States"
+                    country-disabled
+                    onchange={handleChange}
+                >
+                </lightning-input-address>
+                <div class="slds-clearfix">
+                    <lightning-button
+                        variant="brand"
+                        label="Validate Address"
+                        title="Validate Address"
+                        onclick={handleClick}
+                        class="slds-var-p-top_small slds-float_right"
+                    >
+                    </lightning-button>
+                </div>
+            </div>
+        </lightning-card>
+        <template if:true={validated}>
+            <div class="slds-var-m-top_small"></div>
+            <lightning-card
+                title="USPS Validation Response"
+                icon-name={icon}
+            >
+                <div class="slds-var-p-around_small">
+                    <template if:true={validatedAddress}>
+                        <lightning-input-address
+                            street-label="Street"
+                            street={validatedAddress.street}
+                            city-label="City"
+                            city={validatedAddress.city}
+                            province-label="State"
+                            province={validatedAddress.state}
+                            postal-code-label="Zip Code"
+                            postal-code={validatedAddress.zip}
+                            country-label="Country"
+                            country="United States"
+                            disabled
+                        >
+                        </lightning-input-address>
+                        <c-json-pretty-printer
+                            json-to-pretty-print={jsonValidatedAddress}
+                            toggle-title="Additional data from the USPS Validation Response"
+                        >
+                        </c-json-pretty-printer>
+                    </template>
+                    <template if:true={error}>
+                        <p class="slds-text-color_error">{error}</p>
+                    </template>
+                </div>
+            </lightning-card>
+        </template>
+</template>

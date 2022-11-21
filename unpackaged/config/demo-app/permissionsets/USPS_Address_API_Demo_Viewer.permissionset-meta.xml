@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>USPSResponseAuraEnabled</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>USPSAddressAPIDemoController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>USPSAddressAPIInvocable</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>USPSRequestAuraEnabled</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>USPS Address API Demo Viewer</label>
+    <tabSettings>
+        <tab>USPS_Address_API_Demo</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

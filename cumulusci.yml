@@ -1,8 +1,8 @@
 minimum_cumulusci_version: '3.66.0'
 project:
-    name: USPS-Shipping-API-for-Salesforce
+    name: Apex-SDK-for-USPS-Address-API
     package:
-        name: USPS-Shipping-API-for-Salesforce
+        name: Apex-SDK-for-USPS-Address-API
         api_version: '55.0'
     git:
         default_branch: 'main'
@@ -11,17 +11,48 @@ project:
     source_format: sfdx
 
 tasks:
-    robot:
-        options:
-            suites: robot/USPS-Shipping-API-for-Salesforce/tests
-            options:
-                outputdir: robot/USPS-Shipping-API-for-Salesforce/results
-
-    robot_testdoc:
-        options:
-            path: robot/USPS-Shipping-API-for-Salesforce/tests
-            output: robot/USPS-Shipping-API-for-Salesforce/doc/USPS-Api-Playground_tests.html
-
     run_tests:
         options:
             required_org_code_coverage_percent: 90
+
+    deploy:
+        description: Deploys the USPS Address Demo App
+        class_path: cumulusci.tasks.salesforce.Deploy
+        options:
+            path: unpackaged/config/demo-app
+    
+    assign_demo_app_perm_set:
+        description: Assigns the USPS Address Demo App permission set
+        class_path: cumulusci.tasks.salesforce.users.permsets.AssignPermissionSets
+        options:
+            api_names: USPS_Address_API_Demo_Viewer
+    
+    open_demo_app:
+        description: Opens the USPS Address Demo App
+        class_path: cumulusci.tasks.sfdx.SFDXOrgTask
+        options:
+            command: force:org:open -p /lightning/n/USPS_Address_API_Demo
+    
+    retrieve_changes:
+        options:
+            path: unpackaged/config/demo-app
+            exclude: Profile, USPS_Address_API_Setting.USPS_Username
+
+flows:
+    deploy_demo_app:
+        steps:
+            1:
+                task: deploy
+            2:
+                task: assign_demo_app_perm_set
+            3:
+                task: open_demo_app
+
+    dev_org:
+        steps:
+            5:
+                task: assign_permission_sets
+                options:
+                    api_names: USPS_Address_API_User
+            6:
+                flow: deploy_demo_app

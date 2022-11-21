@@ -1,4 +1,4 @@
-public with sharing class USPSCityStateLookupRequest extends USPSAddressRequest {
+public with sharing class USPSCityStateLookupRequest extends USPSRequest {
     public USPSCityStateLookupRequest setZip5(String zip5){
         if(zip5 != null) this.zip5 = zip5;
         return this;
