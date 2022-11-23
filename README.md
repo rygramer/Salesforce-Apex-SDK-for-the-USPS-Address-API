@@ -145,6 +145,6 @@ Assert.areEqual('2533', response.zip4, 'Well, hello Zip+4.');
 
 You get the picture: use `USPSCityStateLookupRequest`.
 
-# ⚠️ Bulkification Warning
+## ⚠️ Bulkification Warning
 
 Be aware that the USPS Address API can only validate 5 addresses at a time, so the callouts are batched accordingly. If you build 10 request objects, you will consume 2 callouts. If you build 501 request objects, [your transaction will fail](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_callouts_timeouts.htm). This warning applies to both ***Flow Support*** and ***Apex Support***.

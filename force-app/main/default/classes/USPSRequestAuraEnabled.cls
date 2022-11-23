@@ -12,14 +12,14 @@ public with sharing class USPSRequestAuraEnabled {
 
     public USPSAddressValidateRequest buildAddressValidateRequest(){
         USPSAddressValidateRequest validate = new USPSAddressValidateRequest()
-        .setFirmName(firmName)
-        .setAddress1(address1)
-        .setAddress2(address2)
-        .setCity(city)
-        .setState(state)
-        .setUrbanization(urbanization)
-        .setZip5(zip5)
-        .setZip4(zip4);
+        .setFirmName(this.firmName)
+        .setAddress1(this.address1)
+        .setAddress2(this.address2)
+        .setCity(this.city)
+        .setState(this.state)
+        .setUrbanization(this.urbanization)
+        .setZip5(this.zip5)
+        .setZip4(this.zip4);
         return validate;
     }
 
